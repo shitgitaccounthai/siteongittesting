@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Endsem Study Plan — April 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13151c;
+    --surface2: #1a1d27;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #e8e9f0;
+    --muted: #7a7d8e;
+    --faint: #3a3d4e;
+
+    --qm: #9d7fe8;
+    --qm-soft: rgba(157,127,232,0.12);
+    --qm-mid: rgba(157,127,232,0.25);
+    --ds: #4eb89a;
+    --ds-soft: rgba(78,184,154,0.12);
+    --ds-mid: rgba(78,184,154,0.25);
+    --qc: #e87f6a;
+    --qc-soft: rgba(232,127,106,0.12);
+    --qc-mid: rgba(232,127,106,0.25);
+    --cmp: #5ba3e8;
+    --cmp-soft: rgba(91,163,232,0.12);
+    --cmp-mid: rgba(91,163,232,0.25);
+    --sm: #e8c46a;
+    --sm-soft: rgba(232,196,106,0.12);
+    --sm-mid: rgba(232,196,106,0.25);
+    --rev: #888;
+    --rev-soft: rgba(136,136,136,0.1);
+    --exam: #e8536a;
+    --exam-soft: rgba(232,83,106,0.1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 52px;
+  }
+
+  .header-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .header h1 em {
+    font-style: italic;
+    color: var(--qm);
+  }
+
+  .header-sub {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 300;
+    margin-top: 14px;
+    max-width: 480px;
+    line-height: 1.7;
+  }
+
+  /* Exam countdown strip */
+  .exam-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    margin-bottom: 44px;
+  }
+
+  .exam-chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .exam-chip::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 10px 0 0 10px;
+  }
+
+  .exam-chip.qm::before { background: var(--qm); }
+  .exam-chip.ds::before { background: var(--ds); }
+  .exam-chip.qc::before { background: var(--qc); }
+  .exam-chip.cmp::before { background: var(--cmp); }
+  .exam-chip.sm::before { background: var(--sm); }
+
+  .exam-chip-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  .exam-chip-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 40px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .leg-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  /* Strategy box */
+  .strategy-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 40px;
+  }
+
+  .strategy-box h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  @media (max-width: 600px) { .strategy-grid { grid-template-columns: 1fr; } }
+
+  .strategy-item {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    border: 1px solid var(--border);
+  }
+
+  .strategy-item strong {
+    color: var(--text);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 3px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* Days */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--faint);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    margin-top: 44px;
+  }
+
+  .day-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .day-card:hover { border-color: var(--border2); }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .day-header:hover { background: var(--surface2); }
+
+  .day-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 68px;
+    flex-shrink: 0;
+    letter-spacing: 0.04em;
+  }
+
+  .day-dots {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .day-title-wrap { flex: 1; }
+
+  .day-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .day-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 1px;
+    font-weight: 300;
+  }
+
+  .exam-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: var(--exam-soft);
+    color: var(--exam);
+    border: 1px solid rgba(232,83,106,0.2);
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+
+  .exam-day-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: rgba(232,83,106,0.18);
+    color: var(--exam);
+    border: 1px solid rgba(232,83,106,0.3);
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+    font-weight: 500;
+  }
+
+  .chevron {
+    color: var(--faint);
+    font-size: 12px;
+    flex-shrink: 0;
+    transition: transform 0.25s cubic-bezier(.4,0,.2,1);
+  }
+
+  .chevron.open { transform: rotate(180deg); }
+
+  /* Sessions */
+  .sessions {
+    display: none;
+    padding: 0 18px 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .sessions.open { display: block; }
+
+  .session {
+    display: grid;
+    grid-template-columns: 90px 3px 1fr;
+    gap: 0 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+    animation: fadeIn 0.2s ease;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  .session:last-child { border-bottom: none; }
+
+  .session-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    padding-top: 3px;
+    line-height: 1.4;
+  }
+
+  .session-bar {
+    border-radius: 3px;
+    align-self: stretch;
+    min-height: 36px;
+  }
+
+  .session-body { }
+
+  .session-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 1px 7px;
+    border-radius: 20px;
+    margin-bottom: 4px;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+
+  .session-detail {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* Exam day card special */
+  .day-card.is-exam { border-color: rgba(232,83,106,0.2); }
+  .day-card.is-exam .day-header { background: rgba(232,83,106,0.04); }
+
+  /* Fall behind tip */
+  .tip-section {
+    margin-top: 40px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+  }
+
+  .tip-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .tip-item {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+
+  .tip-item:last-child { margin-bottom: 0; }
+
+  .tip-icon {
+    font-size: 13px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    padding-top: 2px;
+    flex-shrink: 0;
+    min-width: 20px;
+  }
+
+  .tip-text {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .tip-text strong { color: var(--text); font-weight: 500; }
+
+  .footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.06em;
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; color: black; }
+    .sessions { display: block !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <div class="header-eyebrow">IISER Pune · April 2026 · Endsem</div>
+    <h1>Study Plan<br><em>Optimised.</em></h1>
+    <p class="header-sub">10 hours/day · 5 subjects · 11 days. Every session mapped, every gap addressed. Click any day to expand.</p>
+  </header>
+
+  <div class="exam-strip">
+    <div class="exam-chip qm"><div class="exam-chip-date">APR 23 · MORNING</div><div class="exam-chip-name">Quantum Mechanics</div></div>
+    <div class="exam-chip ds"><div class="exam-chip-date">APR 23 · EVENING</div><div class="exam-chip-name">Data Science</div></div>
+    <div class="exam-chip qc"><div class="exam-chip-date">APR 27 · MORNING</div><div class="exam-chip-name">Quantum Computing</div></div>
+    <div class="exam-chip cmp"><div class="exam-chip-date">APR 28 · MORNING</div><div class="exam-chip-name">CMP</div></div>
+    <div class="exam-chip sm"><div class="exam-chip-date">APR 28 · EVENING</div><div class="exam-chip-name">Statistical Mechanics</div></div>
+  </div>
+
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--qm)"></div>Quantum Mechanics</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--ds)"></div>Data Science</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--qc)"></div>Quantum Computing</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--cmp)"></div>CMP</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--sm)"></div>Stat Mech</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--rev)"></div>Revision / Buffer</div>
+  </div>
+
+  <div class="strategy-box">
+    <h2>Core Strategy</h2>
+    <div class="strategy-grid">
+      <div class="strategy-item"><strong>LAST 3 DAYS RULE</strong>Day 1 = mock exam + gap analysis. Day 2 = fix gaps + formula sheet. Day 3 = formula sheet only, no new material.</div>
+      <div class="strategy-item"><strong>FALL BEHIND FLEX POINT</strong>Apr 19 (Sat) is your buffer. Collapse DS to 90-min drill and use saved time to catch up on QM.</div>
+      <div class="strategy-item"><strong>STAT MECH DESIGN</strong>Last exam (Apr 28 eve). Sprint Chs 7–8 during the CMP→StatMech gap that morning. Don't touch it earlier unless ahead.</div>
+      <div class="strategy-item"><strong>YOUR WEAK PATTERN</strong>You identify mechanisms but leave algebra incomplete. Every mock: write the final expression in full — PT corrections, BEC temp, Kraus operators.</div>
+    </div>
+  </div>
+
+  <div class="section-label">Day-by-day schedule</div>
+
+  <div id="days"></div>
+
+  <div class="tip-section">
+    <h2>If you fall behind</h2>
+    <div class="tip-item"><span class="tip-icon">01</span><span class="tip-text"><strong>Never borrow time from the day before an exam.</strong> That time is sacred for formula sheet review and sleep.</span></div>
+    <div class="tip-item"><span class="tip-icon">02</span><span class="tip-text"><strong>Apr 19 (Saturday) is your main flex day.</strong> If Days 1–2 ran over, collapse DS to a 90-min final drill and redirect the time to QM.</span></div>
+    <div class="tip-item"><span class="tip-icon">03</span><span class="tip-text"><strong>Stat Mech on Apr 28 afternoon only works</strong> if you've glanced at Ch 7–8 by Apr 26. If not, add a 1h primer to QC evening on Apr 25.</span></div>
+    <div class="tip-item"><span class="tip-icon">04</span><span class="tip-text"><strong>Prioritise derivations over definitions.</strong> If short on time, drop reading theory and do one more timed problem instead.</span></div>
+    <div class="tip-item"><span class="tip-icon">05</span><span class="tip-text"><strong>Don't discuss the paper after the exam.</strong> Immediately redirect focus to the next subject. The gap between QM and DS on Apr 23 is only a few hours.</span></div>
+  </div>
+
+  <div class="footer">Generated · April 17, 2026 · IISER Pune Endsem 2026</div>
+
+</div>
+
+<script>
+const C = {
+  qm:  { color: 'var(--qm)',  soft: 'var(--qm-soft)',  label: 'Quantum Mech' },
+  ds:  { color: 'var(--ds)',  soft: 'var(--ds-soft)',  label: 'Data Science' },
+  qc:  { color: 'var(--qc)',  soft: 'var(--qc-soft)',  label: 'Quantum Computing' },
+  cmp: { color: 'var(--cmp)', soft: 'var(--cmp-soft)', label: 'CMP' },
+  sm:  { color: 'var(--sm)',  soft: 'var(--sm-soft)',  label: 'Stat Mech' },
+  rev: { color: 'var(--rev)', soft: 'var(--rev-soft)', label: 'Revision / Buffer' },
+};
+
+const days = [
+  { date:'Apr 17', shortDate:'Thu', label:'Foundation Blitz', subtitle:'QM perturbation theory + DS pandas/matplotlib', subjects:['qm','ds'],
+    sessions:[
+      { time:'9–11 AM', sub:'qm', detail:'Lectures 16–32 audit: list every topic ✓/✗. Perturbation theory (Sec 17.1 Shankar) — derive 1st & 2nd order corrections.' },
+      { time:'11AM–1PM', sub:'qm', detail:'Time-dependent PT (Sec 18.2): Fermi\'s golden rule, sudden & adiabatic approximations. Work 2 problems each.' },
+      { time:'2–3:30 PM', sub:'ds', detail:'Pandas: groupby, merge, pivot_table, apply. Code 5 mini-exercises from scratch.' },
+      { time:'3:30–5 PM', sub:'ds', detail:'Matplotlib: subplots, styling, savefig, errorbar. Recreate 3 plot types from memory.' },
+      { time:'6–7:30 PM', sub:'qm', detail:'WKB approximation: connection formulas, tunneling, harmonic oscillator example (Lectures 24–26 notes).' },
+      { time:'7:30–9 PM', sub:'ds', detail:'pytest basics: fixtures, parametrize, assert patterns. Write tests for 2 of your pandas functions.' },
+    ]},
+  { date:'Apr 18', shortDate:'Fri', label:'QM Deep + DS Algorithms', subtitle:'Identical particles, scattering, mergesort/quicksort', subjects:['qm','ds'],
+    sessions:[
+      { time:'9–11 AM', sub:'qm', detail:'Scattering theory (if covered): Born approximation, partial waves, phase shifts.' },
+      { time:'11AM–1PM', sub:'qm', detail:'Identical particles (Lectures 20–22): symmetric/antisymmetric states, exchange interaction, Slater determinants. Problems from Griffiths Ch 5.' },
+      { time:'2–3:30 PM', sub:'ds', detail:'Sorting algorithms: implement mergesort & quicksort in Python from scratch. Analyze time complexity. Write pytest tests for edge cases.' },
+      { time:'3:30–5 PM', sub:'ds', detail:'Logging & debugging: Python logging module (levels, handlers, formatters), pdb/breakpoints, common debugging patterns.' },
+      { time:'6–7:30 PM', sub:'qm', detail:'Variational method (Lectures 22–23): variational principle proof, helium atom, hydrogen ground state. Derive upper bound formula.' },
+      { time:'7:30–9 PM', sub:'rev', detail:'QM self-quiz: write 10 questions from topics covered so far, answer without notes. Mark all gaps.' },
+    ]},
+  { date:'Apr 19', shortDate:'Sat', label:'QM Sprint + DS Bash', subtitle:'Degenerate PT, mock exam, bash scripting', subjects:['qm','ds'],
+    sessions:[
+      { time:'9–11 AM', sub:'qm', detail:'Degenerate PT (Lecture 28, Sec 17.3): secular equation, good/bad states, fine structure example. 3 problems.' },
+      { time:'11AM–1PM', sub:'qm', detail:'Full past-paper style session: 5 mixed questions (perturbation + variational + WKB). Time yourself: 25 min per question.' },
+      { time:'2–3:30 PM', sub:'ds', detail:'Bash scripting: loops, conditionals, grep/awk/sed, file operations, piping. Write 5 small scripts.' },
+      { time:'3:30–5 PM', sub:'ds', detail:'Integration practice: pandas + matplotlib + pytest in one mini-project (analyze a CSV, plot results, test your functions).' },
+      { time:'6–7:30 PM', sub:'qm', detail:'Revision cycle 1: go through your gap list from Day 1–2 quiz. Re-derive the 3 hardest things without notes.' },
+      { time:'7:30–8:30 PM', sub:'ds', detail:'DS speed round: 10 short coding tasks (5 pandas, 3 matplotlib, 2 bash). No googling.' },
+    ]},
+  { date:'Apr 20', shortDate:'Sun', label:'QM Final 72h Begins', subtitle:'CG coefficients, mock exam, formula sheet', subjects:['qm','ds'], examNote:'QM in 3 days',
+    sessions:[
+      { time:'9–11 AM', sub:'qm', detail:'Lectures 1–15 rapid review: harmonic oscillator, H-atom, angular momentum, CG coefficients. Build formula sheet.' },
+      { time:'11AM–1PM', sub:'qm', detail:'Angular momentum addition (Lectures 16–19): J=J₁+J₂, product vs coupled basis, CG table construction. Compute 3 CG coefficients by hand.' },
+      { time:'2–4 PM', sub:'qm', detail:'Full mock exam: 90 minutes, closed book. Cover perturbation + WKB + identical particles + variational. Self-grade ruthlessly.' },
+      { time:'4–5:30 PM', sub:'ds', detail:'DS final polish: revisit any weak bash or pytest areas. Review logging patterns once more.' },
+      { time:'6–8 PM', sub:'qm', detail:'Fix all mock exam errors. Re-read Shankar Sec 17.1, 17.3, 18.2 for any gaps. Finalize formula sheet.' },
+      { time:'8–9 PM', sub:'rev', detail:'Light review only — no new material. Read through formula sheet twice, sleep well.' },
+    ]},
+  { date:'Apr 21', shortDate:'Mon', label:'QM Last-3-Days Strategy', subtitle:'Degenerate PT secular matrix, Dirac equation', subjects:['qm','ds'], examNote:'QM in 2 days',
+    sessions:[
+      { time:'9–10:30 AM', sub:'qm', detail:'Target weak spots from mock: redo any problems you got wrong. Focus on degenerate PT secular matrix setup.' },
+      { time:'10:30AM–12PM', sub:'qm', detail:'Dirac equation basics (if covered): gamma matrices, Dirac Hamiltonian, free particle solutions.' },
+      { time:'12–1 PM', sub:'qm', detail:'High-priority formula recall drill: write from memory — PT corrections, WKB quantization condition, CG selection rules.' },
+      { time:'2–3:30 PM', sub:'ds', detail:'Final DS mock: implement mergesort, write 3 pandas operations, 2 bash scripts, 1 pytest suite — all in 90 minutes.' },
+      { time:'3:30–5 PM', sub:'qm', detail:'Revision cycle 2: spaced repetition sweep of Day 1 topics. Answer 15 quick flashcard-style questions.' },
+      { time:'6–7:30 PM', sub:'qm', detail:'Attempt 3 problems from Shankar chapter problems (Ch 17, 18). No solutions until fully done.' },
+      { time:'7:30–8:30 PM', sub:'rev', detail:'Formula sheet + concept map. Rest. No late-night cramming.' },
+    ]},
+  { date:'Apr 22', shortDate:'Tue', label:'Eve of QM & DS Exams', subtitle:'Formula sheet only, light recall, sleep', subjects:['qm','ds'], examNote:'EXAM TOMORROW',
+    sessions:[
+      { time:'9–10 AM', sub:'qm', detail:'Read formula sheet and key derivations once. Recall: connection formulas, 1st/2nd order PT, CG table.' },
+      { time:'10–11 AM', sub:'ds', detail:'Read your bash scripts, pytest patterns, sort implementations. Visualize running them.' },
+      { time:'11AM–12PM', sub:'qm', detail:'1 final problem: a multi-part perturbation problem. Do it fresh, then check with solution.' },
+      { time:'2–3 PM', sub:'rev', detail:'Rest, light walk, eat well. Brain consolidates during downtime — this is productive.' },
+      { time:'4–5 PM', sub:'qm', detail:'Formula sheet final read. Sleep by 10 PM.' },
+    ]},
+  { date:'Apr 23', shortDate:'Wed', label:'EXAM DAY — QM + DS', subtitle:'', subjects:['qm','ds'], isExam:true,
+    sessions:[
+      { time:'Morning', sub:'qm', detail:'Quantum Mechanics Exam. Before entering: read formula sheet once. In exam: attempt short questions first, then derivations. Show all steps.' },
+      { time:'Midday', sub:'rev', detail:'Light lunch, 30-min rest. Don\'t discuss the QM paper — immediately refocus your energy.' },
+      { time:'Afternoon', sub:'ds', detail:'Data Science Exam. Warm up by mentally tracing a mergesort. Attempt coding questions first, theory last.' },
+    ]},
+  { date:'Apr 24', shortDate:'Thu', label:'QC Intensive Start', subtitle:'QFT, phase estimation, Shor\'s algorithm', subjects:['qc'], examNote:'QC in 3 days',
+    sessions:[
+      { time:'9–11 AM', sub:'qc', detail:'QFT circuit (Sec 3.4): derive the QFT matrix, circuit decomposition into Hadamard + controlled phase gates. Count gate depth.' },
+      { time:'11AM–1PM', sub:'qc', detail:'Phase estimation (Sec 3.4.3): circuit construction, precision vs number of qubits, worked example with 3-qubit register.' },
+      { time:'2–4 PM', sub:'qc', detail:'Shor\'s algorithm (Sec 3.7): period finding via phase estimation, modular exponentiation, factor 15 by hand completely.' },
+      { time:'4–6 PM', sub:'qc', detail:'Grover\'s algorithm (Sec 3.8): oracle construction, diffusion operator, amplitude amplification — derive √N scaling from scratch.' },
+      { time:'7–9 PM', sub:'qc', detail:'Quantum counting (Sec 3.8.2) + Bernstein-Vazirani + Deutsch-Jozsa: circuit diagram + complexity comparison table for all three.' },
+    ]},
+  { date:'Apr 25', shortDate:'Fri', label:'QC Errors + CMP Start', subtitle:'Kraus operators, CPTP maps, Debye model', subjects:['qc','cmp'],
+    sessions:[
+      { time:'9–11 AM', sub:'qc', detail:'Errors & Mitigation (Ch 4): Kraus operators, CPTP maps, depolarization channel — write out all 3 Pauli error operators explicitly.' },
+      { time:'11AM–1PM', sub:'qc', detail:'Phase/amplitude damping, decoherence channels. Adiabatic & variational algorithms (Sec 3.11, 3.12): QAOA concept overview.' },
+      { time:'2–4 PM', sub:'cmp', detail:'Kittel Ch 5 phonons thermal: Debye model, Debye T³ law derivation, Einstein model — contrast the two densities of states.' },
+      { time:'4–6 PM', sub:'cmp', detail:'Free electron Fermi gas (Kittel Ch 6): Fermi energy, density of states, heat capacity of electron gas (Sommerfeld expansion).' },
+      { time:'7–8:30 PM', sub:'qc', detail:'QC revision: from memory, draw QFT circuit + Grover circuit. Write Kraus operators for depolarizing channel.' },
+      { time:'8:30–9 PM', sub:'rev', detail:'CMP formula list started: Debye temperature, Fermi energy expression, electronic heat capacity coefficient.' },
+    ]},
+  { date:'Apr 26', shortDate:'Sat', label:'QC Last-3-Days + CMP Bands', subtitle:'QC mock exam, energy bands, semiconductors', subjects:['qc','cmp'], examNote:'QC tomorrow',
+    sessions:[
+      { time:'9–10:30 AM', sub:'qc', detail:'QC full mock: 5 problems — 1 QFT, 1 Shor, 1 Grover, 1 error channel, 1 Kitaev phase estimation. Timed 90 minutes.' },
+      { time:'10:30AM–12PM', sub:'qc', detail:'Fix all mock errors. Focus on error mitigation math: Kraus conditions (trace-preserving, completely positive proof).' },
+      { time:'2–4 PM', sub:'cmp', detail:'Energy bands (Kittel Ch 7): nearly-free electron model, origin of band gaps, Kronig-Penney in reciprocal space, Bloch theorem.' },
+      { time:'4–6 PM', sub:'cmp', detail:'Semiconductor crystals (Kittel Ch 8): effective mass tensor, holes, intrinsic carrier concentration, donor/acceptor states.' },
+      { time:'7–8:30 PM', sub:'qc', detail:'QC formula sheet finalization. Re-read Sec 3.4–3.9 headings and recall key results without notes.' },
+      { time:'8:30–9 PM', sub:'rev', detail:'Sleep by 10 PM. QC exam is tomorrow morning.' },
+    ]},
+  { date:'Apr 27', shortDate:'Sun', label:'EXAM DAY — QC + CMP Sprint', subtitle:'', subjects:['qc','cmp'], isExam:true,
+    sessions:[
+      { time:'Morning', sub:'qc', detail:'Quantum Computing Exam. If stuck on circuit depth, count gates layer by layer. Show all Kraus conditions explicitly for full marks.' },
+      { time:'Midday', sub:'rev', detail:'Rest 1 hour. Eat. Then switch gear entirely — don\'t look at QC notes.' },
+      { time:'Afternoon', sub:'cmp', detail:'CMP sprint: magnetism (Kittel Ch 11, Simon Ch 19): Langevin paramagnetism, Curie law, Weiss mean field, exchange interaction.' },
+      { time:'Evening', sub:'cmp', detail:'Simon Ch 20 spontaneous order + semiconductor physics (Simon Ch 16–17). Formula sheet top-up before sleep.' },
+    ]},
+  { date:'Apr 28', shortDate:'Mon', label:'EXAM DAY — CMP + Stat Mech', subtitle:'', subjects:['cmp','sm'], isExam:true,
+    sessions:[
+      { time:'Early AM', sub:'cmp', detail:'CMP: Read formula sheet once. Key recall: Debye vs Einstein, Fermi energy, Bloch theorem statement, Curie law form.' },
+      { time:'Morning', sub:'cmp', detail:'CMP Exam. Sketch dispersion diagrams when needed — they unlock the physics and show the examiner your understanding.' },
+      { time:'Midday', sub:'sm', detail:'Stat Mech sprint: Ch 7 quantum statistics — FD, BE, MB occupancy numbers. Key limits, mean occupation formulas, variance.' },
+      { time:'Afternoon', sub:'sm', detail:'Ch 8 BEC: condensation temperature derivation, specific heat above/below T_BEC. Ch 9 phase transition elements.' },
+      { time:'Evening', sub:'sm', detail:'Stat Mech Exam. Grand canonical formalism is the thread: always identify µ and Z first, then build thermodynamics from there.' },
+    ]},
+];
+
+function buildDays() {
+  const container = document.getElementById('days');
+  days.forEach((day, i) => {
+    const subDots = [...new Set(day.subjects)].map(s =>
+      `<div class="leg-dot" style="background:${C[s].color};width:8px;height:8px;"></div>`
+    ).join('');
+
+    const badge = day.isExam
+      ? `<span class="exam-day-badge">EXAM DAY</span>`
+      : day.examNote
+        ? `<span class="exam-badge">${day.examNote}</span>`
+        : '';
+
+    const card = document.createElement('div');
+    card.className = 'day-card' + (day.isExam ? ' is-exam' : '');
+    card.innerHTML = `
+      <div class="day-header" onclick="toggle(${i})" id="hdr-${i}">
+        <span class="day-date">${day.date} · ${day.shortDate}</span>
+        <div class="day-dots">${subDots}</div>
+        <div class="day-title-wrap">
+          <div class="day-title">${day.label}</div>
+          ${day.subtitle ? `<div class="day-subtitle">${day.subtitle}</div>` : ''}
+        </div>
+        ${badge}
+        <span class="chevron" id="chev-${i}">▼</span>
+      </div>
+      <div class="sessions" id="sess-${i}">
+        ${day.sessions.map(s => `
+          <div class="session">
+            <div class="session-time">${s.time}</div>
+            <div class="session-bar" style="background:${C[s.sub].color};opacity:0.7"></div>
+            <div class="session-body">
+              <span class="session-tag" style="background:${C[s.sub].soft};color:${C[s.sub].color};border:1px solid ${C[s.sub].color}33">${C[s.sub].label}</span>
+              <div class="session-detail">${s.detail}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  // Open first day by default
+  document.getElementById('sess-0').classList.add('open');
+  document.getElementById('chev-0').classList.add('open');
+}
+
+function toggle(i) {
+  const sess = document.getElementById('sess-' + i);
+  const chev = document.getElementById('chev-' + i);
+  sess.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+buildDays();
+</script>
+</body>
+</html>
